@@ -79,3 +79,18 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+HTML::macro('span', function($value, $attributes)
+{
+	return sprintf('<span %s>%s</span>', HTML::attributes($attributes), $value);
+});
+
+HTML::macro('btnDelete', function($component, $id)
+{
+	return html_entity_decode( link_to(route($component.'.destroy', $id), HTML::span(null, array('class' => 'glyphicon glyphicon-trash')), array('class' => 'btn btn-sm btn-danger deleteModal', 'data-toggle' => 'modal', 'data-target' => '#projectDelete', 'data-project' => $id)) );
+});
+
+HTML::macro('btnEdit', function($component, $id)
+{
+	return html_entity_decode( link_to(route($component.'.edit', $id), HTML::span(null, array('class' => 'glyphicon glyphicon-pencil')), array('class' => 'btn btn-sm btn-primary')) );
+});

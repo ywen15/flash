@@ -26,8 +26,7 @@ App::before(function($request)
 		}
 		return $USER_INFO;
 	});
-	$USER_INFO = App::make('USER_INFO');
-	View::share('USER_INFO', $USER_INFO);
+	View::share('USER_INFO', app('USER_INFO'));
 });
 
 

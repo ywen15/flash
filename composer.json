@@ -10,7 +10,8 @@
 		"codesleeve/asset-pipeline": "dev-master",
 		"laravelbook/ardent": "2.*",
 		"afarkas/html5shiv": "3.*",
-		"cartalyst/sentry": "2.1.*"
+		"cartalyst/sentry": "2.1.*",
+		"nesbot/Carbon": "*"
 	},
 	"autoload": {
 		"classmap": [

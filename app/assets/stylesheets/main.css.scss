@@ -1,0 +1,52 @@
+/** Navigation bar **/
+.navbar {
+  .navbar-nav {
+    width: 100%;
+    text-align: center;
+    li {
+      float: none;
+      display: inline-block;
+      h4 {
+        padding-top: 5px;
+      }
+    }
+  }
+  img {
+    max-height: 50px;
+  }
+  .nav-date {
+    color: white;
+  }
+}
+
+/** Container **/
+.container {
+  width: 98%;
+}
+#project-list_wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  width: 98%;
+
+  #project-list {
+    text-align: center;
+    th {
+      text-align: center;
+    }
+  }
+
+  .days-left-current {
+    background-color: yellow;
+    padding: 3px;
+  }
+  .days-left-future {
+    background-color: green;
+    color: white;
+    padding: 3px;
+  }
+  .days-left-past {
+    background-color: red;
+    color: white;
+    padding: 3px;
+  }
+}

@@ -11,16 +11,22 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', array('as' => 'home', 'uses' => 'HomeController@home'));
 
 /** API **/
 
 
 /** Session **/
+Route::get('login', 'SessionController@create');
+Route::get('logout', 'SessionController@destroy');
 Route::resource('session', 'SessionController', array('only' => array('store')));
 
 /** User **/
 Route::resource('user', 'UserController');
+
+/** Project **/
+Route::get('project/dataTable/{project_type?}', 'ProjectController@dataTable');
+Route::get('billing', 'ProjectController@billing');
+Route::get('archive', 'ProjectController@archive');
+Route::get('project/{project_id}/delete', 'ProjectController@delete');
+Route::resource('project', 'ProjectController');
