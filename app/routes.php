@@ -28,5 +28,6 @@ Route::resource('user', 'UserController');
 Route::get('project/dataTable/{project_type?}', 'ProjectController@dataTable');
 Route::get('billing', 'ProjectController@billing');
 Route::get('archive', 'ProjectController@archive');
-Route::get('project/{project_id}/delete', 'ProjectController@delete');
+Route::get('project/{project_id}/reset', 'ProjectController@reset');
+Route::get('project/modal/{project_id}/{type}', 'ProjectController@modal');
 Route::resource('project', 'ProjectController');

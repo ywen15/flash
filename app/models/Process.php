@@ -7,6 +7,9 @@ class Process extends Ardent {
 	protected $fillable = array();
 	public static $rules = array();
 
+	/** Enable softDeleting **/
+	use SoftDeletingTrait;
+
 	/** Relations **/
 	public function equipments() {
 		return $this->hasMany('Equipment');

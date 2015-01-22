@@ -36,6 +36,11 @@ return array(
 
 	/** Confirmation **/
 	'confirm_delete' => 'Are you sure you want to remove this project permanently?',
+	'confirm_reset' => 'Are you sure you want to Re-Schedule this project? This will add the project back to the Projects List as <b>"Status:IN-PROGRESS"</b> and any tasks that have been scheduled will remain in their last state.',
+
+	/** Notification **/
+	'project_delete_success' => 'Project has been successfully deleted.',
+	'project_delete_fail' => 'Failed to delete project.',
 
 	/** Project properties **/
 	'days_left' => 'Days Left',

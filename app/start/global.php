@@ -87,10 +87,15 @@ HTML::macro('span', function($value, $attributes)
 
 HTML::macro('btnDelete', function($component, $id)
 {
-	return html_entity_decode( link_to(route($component.'.destroy', $id), HTML::span(null, array('class' => 'glyphicon glyphicon-trash')), array('class' => 'btn btn-sm btn-danger deleteModal', 'data-toggle' => 'modal', 'data-target' => '#projectDelete', 'data-project' => $id)) );
+	return html_entity_decode( link_to(route($component.'.destroy', $id), HTML::span(null, array('class' => 'glyphicon glyphicon-trash')), array('class' => 'btn btn-sm btn-danger projectModal', 'data-toggle' => 'modal', 'data-target' => '#projectModal', 'data-project' => $id, 'data-action' => 'destroy')) );
 });
 
 HTML::macro('btnEdit', function($component, $id)
 {
 	return html_entity_decode( link_to(route($component.'.edit', $id), HTML::span(null, array('class' => 'glyphicon glyphicon-pencil')), array('class' => 'btn btn-sm btn-primary')) );
+});
+
+HTML::macro('btnReschedule', function($component, $id)
+{
+	return html_entity_decode( link_to($component.'/'.$id.'/reset', HTML::span(null, array('class' => 'glyphicon glyphicon-arrow-left')), array('class' => 'btn btn-sm btn-success projectModal', 'data-toggle' => 'modal', 'data-target' => '#projectModal', 'data-project' => $id, 'data-action' => 'reset')) );
 });

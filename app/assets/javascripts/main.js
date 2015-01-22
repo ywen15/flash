@@ -5,14 +5,13 @@
  */
 
 function rebinder() {
-	$('.deleteModal').click(function() {
-		console.log($(this));
+	$('.projectModal').click(function() {
 		$.ajax({
-			url: '/project/' + $(this).data('project') + '/delete',
+			url: '/project/modal/' + $(this).data('project') + '/' + $(this).data('action'),
 		}).done(function(html) {
-			$('#projectDelete').remove();
+			$('#projectModal').remove();
 			$('body').append(html);
-			$('#projectDelete').modal('toggle');
+			$('#projectModal').modal('toggle');
 		});
 	});
 }

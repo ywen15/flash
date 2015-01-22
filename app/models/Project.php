@@ -7,6 +7,18 @@ class Project extends Ardent {
 	protected $fillable = array();
 	public static $rules = array();
 
+	/** Enable softDeleting **/
+	use SoftDeletingTrait;
+
+	/** Boot **/
+	public static function boot() {
+		parent::boot();
+
+		static::deleted(function($project) {
+			Cache::flush();
+		});
+	}
+
 	/** Relations **/
 	public function tasks() {
 		return $this->hasMany('Task');
@@ -25,17 +37,17 @@ class Project extends Ardent {
 	public static function getProjectType($type=null) {
 		if($type == 'billing') {
 			$projects = Cache::rememberForever('query_billing', function() {
-				return Project::whereNull('billed_at')->whereNotNull('completed_at')->get();
+				return Project::whereNull('deleted_at')->whereNull('billed_at')->whereNotNull('completed_at')->get();
 			});
 		}
 		else if($type == 'archive') {
 			$projects = Cache::rememberForever('query_archive', function() {
-				return Project::whereNotNull('billed_at')->get();
+				return Project::whereNull('deleted_at')->whereNotNull('billed_at')->get();
 			});
 		}
 		else {
 			$projects = Cache::rememberForever('query_normal', function() {
-				return Project::whereNull('completed_at')->whereNull('billed_at')->get();
+				return Project::whereNull('deleted_at')->whereNull('completed_at')->whereNull('billed_at')->get();
 			});
 		}
 		return $projects;

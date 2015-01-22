@@ -90,12 +90,22 @@ class ProjectController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$project = Project::findOrFail($id);
+
+		$project->tasks()->delete();
+		if($project->delete()) {
+			Session::flash('success', trans('flash.project_delete_success'));
+		}
+		else {
+			Session::flash('fail', trans('flash.project_delete_fail'));
+		}
+
+		return Redirect::back();
 	}
 
-	public function delete($id)
+	public function modal($id, $type)
 	{
-		return View::make('projects.delete')->with('project', Project::findOrFail($id));
+		return View::make('projects.modal')->with('type', $type)->with('project', Project::findOrFail($id));
 	}
 
 	public function dataTable($project_type=null)
@@ -132,11 +142,12 @@ class ProjectController extends \BaseController {
 			$p->task = count($p->tasks()->get());
 
 			$editBtn = HTML::btnEdit('project', $p->id);
+			$resetBtn = HTML::btnReschedule('project', $p->id);
 			$deleteBtn = HTML::btnDelete('project', $p->id);
 			$p->modify = $completeBtn . $resetBtn . $billBtn . $editBtn . $deleteBtn;
 		}
 
-		Cache::add($project_type, $projects, $this->CACHE_EXPIRE_TIME);
+		//Cache::add($project_type, $projects, $this->CACHE_EXPIRE_TIME);
 		return Response::json(array('data' => $projects));
 		
 	}
@@ -149,6 +160,11 @@ class ProjectController extends \BaseController {
 	public function archive()
 	{
 		return $this->index('archive');
+	}
+
+	public function reset()
+	{
+		//
 	}
 
 }

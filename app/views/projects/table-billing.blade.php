@@ -32,6 +32,9 @@
                 {'data': 'notes'},
                 {'data': 'modify'}
             ],
+            initComplete: function(settings, json) {
+                rebinder();
+            }
         });
 
         $(document).ready(function() {

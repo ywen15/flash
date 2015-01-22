@@ -42,6 +42,9 @@
                 {'data': 'reference'},
                 {'data': 'modify'}
             ],
+            initComplete: function(settings, json) {
+                rebinder();
+            }
         });
 
         $(document).ready(function() {

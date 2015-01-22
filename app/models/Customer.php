@@ -7,6 +7,9 @@ class Customer extends Ardent {
 	protected $fillable = array();
 	public static $rules = array();
 
+	/** Enable softDeleting **/
+	use SoftDeletingTrait;
+
 	/** Relations **/
 
 }

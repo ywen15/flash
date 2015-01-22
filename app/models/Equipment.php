@@ -7,6 +7,9 @@ class Equipment extends Ardent {
 	protected $fillable = array();
 	public static $rules = array();
 
+	/** Enable softDeleting **/
+	use SoftDeletingTrait;
+
 	/** Relations **/
 	public function process() {
 		return $this->belongsTo('Process');
