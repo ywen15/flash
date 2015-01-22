@@ -69,7 +69,7 @@ return array(
 
 	'memcached' => array(
 
-		array('host' => '127.0.0.1', 'port' => 11211, 'weight' => 100),
+		array('host' => 'mc4.dev.ec2.memcachier.com', 'port' => 11211, 'weight' => 100, 'username' => 'b197d3', 'password' => 'ca5b23a9a6'),
 
 	),
 
