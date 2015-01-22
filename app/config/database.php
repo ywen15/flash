@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'heroku_f991f8bfb70b09c',
-			'username'  => 'b66fc1855380ff',
-			'password'  => 'f32618fc',
+			'database'  => 'heroku_66c2a7ec14619a9',
+			'username'  => 'bbba6e436dae40',
+			'password'  => '347f8ab3',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
