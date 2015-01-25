@@ -99,3 +99,13 @@ HTML::macro('btnReschedule', function($component, $id)
 {
 	return html_entity_decode( link_to($component.'/'.$id.'/reset', HTML::span(null, array('class' => 'glyphicon glyphicon-arrow-left')), array('class' => 'btn btn-sm btn-success projectModal', 'data-toggle' => 'modal', 'data-target' => '#projectModal', 'data-project' => $id, 'data-action' => 'reset')) );
 });
+
+HTML::macro('btnComplete', function($component, $id)
+{
+	return html_entity_decode( link_to($component.'/'.$id.'/complete', HTML::span(null, array('class' => 'glyphicon glyphicon-ok')), array('class' => 'btn btn-sm btn-success projectModal', 'data-toggle' => 'modal', 'data-target' => '#projectModal', 'data-project' => $id, 'data-action' => 'complete')) );
+});
+
+HTML::macro('btnBill', function($component, $id)
+{
+	return html_entity_decode( link_to($component.'/'.$id.'/bill', HTML::span(null, array('class' => 'glyphicon glyphicon-usd')), array('class' => 'btn btn-sm btn-warning projectModal', 'data-toggle' => 'modal', 'data-target' => '#projectModal', 'data-project' => $id, 'data-action' => 'bill')) );
+});

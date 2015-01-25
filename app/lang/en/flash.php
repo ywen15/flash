@@ -33,14 +33,22 @@ return array(
 	'save' => 'Save',
 	'update' => 'Update',
 	'delete' => 'Delete',
+	'add_archive' => 'Add to Archive',
 
 	/** Confirmation **/
 	'confirm_delete' => 'Are you sure you want to remove this project permanently?',
 	'confirm_reset' => 'Are you sure you want to Re-Schedule this project? This will add the project back to the Projects List as <b>"Status:IN-PROGRESS"</b> and any tasks that have been scheduled will remain in their last state.',
+	'confirm_complete' => 'Are you sure you want to complete this project?',
 
 	/** Notification **/
 	'project_delete_success' => 'Project has been successfully deleted.',
-	'project_delete_fail' => 'Failed to delete project.',
+	'project_delete_fail' => 'Failed to delete the project.',
+	'project_reschedule_success' => 'Project has been successfully rescheduled.',
+	'project_reschedule_fail' => 'Failed to reschedule the project.',
+	'project_complete_success' => 'Project has been successfully completed.',
+	'project_complete_fail' => 'Failed to complete the project.',
+	'project_bill_success' => 'Project has been successfully billed.',
+	'project_bill_fail' => 'Failed to bill the project.',
 
 	/** Project properties **/
 	'days_left' => 'Days Left',
@@ -57,7 +65,7 @@ return array(
 	'schedule' => 'Scheduled?',
 	'task' => 'Tasks',
 	'notes' => 'Notes',
-	'order_total' => 'Order Total',
+	'order_amount' => 'Order Total',
 	'shipping' => 'Shipping',
 	'hst' => 'HST',
 	'total' => 'Total',

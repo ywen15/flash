@@ -8,7 +8,7 @@
             <th>{{ trans('flash.quantity') }}</th>
             <th>{{ trans('flash.stock') }}</th>
             <th>{{ trans('flash.rep') }}</th>
-            <th>{{ trans('flash.order_total') }}</th>
+            <th>{{ trans('flash.order_amount') }}</th>
             <th>{{ trans('flash.shipping') }}</th>
             <th>{{ trans('flash.hst') }}</th>
             <th>{{ trans('flash.total') }}</th>

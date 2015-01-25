@@ -12,6 +12,5 @@
 //
 //= require jquery
 //= require bootstrap
-//= require jquery.dataTables
-//= require dataTables.bootstrap
+//= require_tree dataTables
 //= require main

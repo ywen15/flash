@@ -4,7 +4,7 @@ use LaravelBook\Ardent\Ardent;
 
 class Project extends Ardent {
 	/** Properties **/
-	protected $fillable = array();
+	protected $fillable = array('description', 'docket', 'quantity', 'stock', 'notes', 'schedule', 'reference', 'order_amount', 'shipping', 'hst', 'due_at', 'completed_at', 'billed_at');
 	public static $rules = array();
 
 	/** Enable softDeleting **/
@@ -13,6 +13,10 @@ class Project extends Ardent {
 	/** Boot **/
 	public static function boot() {
 		parent::boot();
+
+		static::updating(function($project) {
+			Cache::flush();
+		});
 
 		static::deleted(function($project) {
 			Cache::flush();

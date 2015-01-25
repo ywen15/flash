@@ -25,6 +25,7 @@
 <script type="text/javascript">
     (function($) {
         var projects = $('#project-list').DataTable({
+            dom: 'T<"clear">lfrtip',
             ajax: '{{ action("ProjectController@dataTable") }}',
             columns: [
                 {'data': 'timeline'},
@@ -46,6 +47,11 @@
             ],
             initComplete: function(settings, json) {
                 rebinder();
+            },
+            tableTools: {
+                'aButtons': [
+                    'select_all', 'select_none'
+                ]
             }
         });
 

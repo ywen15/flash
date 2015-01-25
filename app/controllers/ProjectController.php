@@ -135,14 +135,20 @@ class ProjectController extends \BaseController {
 			$pm = $p->pm()->first();
 			$p->pm = ($pm) ? $pm->first_name.' '.$pm->last_name : null;
 
-			$p->total = $p->order_amount + $p->hst;
+			$p->total = $p->order_amount + $p->shipping + $p->hst;
 
 			$p->days_to_complete = Carbon::createFromFormat('Y-m-d H:i:s', $p->due_at)->diffInDays(Carbon::createFromFormat('Y-m-d H:i:s', $p->created_at));
 			$p->schedule = ($p->schedule) ? HTML::image('images/on_schedule.png') : HTML::image('images/off_schedule.png');
 			$p->task = count($p->tasks()->get());
 
+			if(!$project_type) {
+				$completeBtn = HTML::btnComplete('project', $p->id);
+			}
+			else if($project_type == 'billing') {
+				$billBtn = HTML::btnBill('project', $p->id);
+				$resetBtn = HTML::btnReschedule('project', $p->id);
+			}
 			$editBtn = HTML::btnEdit('project', $p->id);
-			$resetBtn = HTML::btnReschedule('project', $p->id);
 			$deleteBtn = HTML::btnDelete('project', $p->id);
 			$p->modify = $completeBtn . $resetBtn . $billBtn . $editBtn . $deleteBtn;
 		}
@@ -162,9 +168,54 @@ class ProjectController extends \BaseController {
 		return $this->index('archive');
 	}
 
-	public function reset()
+	public function reset($id)
 	{
-		//
+		$project = Project::findOrFail($id);
+
+		$project->tasks()->update(array('status' => 'in-progress'));
+		$project->completed_at = null;
+		if($project->save()) {
+			Session::flash('success', trans('flash.project_reschedule_success'));
+		}
+		else {
+			Session::flash('fail', trans('flash.project_reschedule_fail'));
+		}
+
+		return Redirect::back();
+	}
+
+	public function complete($id)
+	{
+		$project = Project::findOrFail($id);
+
+		$project->tasks()->update(array('status' => 'complete'));
+		$project->schedule = false;
+		$project->completed_at = \Carbon\Carbon::now()->toDateTimeString();
+
+		if($project->save()) {
+			Session::flash('success', trans('flash.project_complete_success'));
+		}
+		else {
+			Session::flash('fail', trans('flash.project_complete_fail'));
+		}
+
+		return Redirect::back();
+	}
+
+	public function bill($id)
+	{
+		$data = Input::all();
+		$project = Project::findOrFail($id)->fill($data);
+		$project->billed_at = \Carbon\Carbon::now()->toDateTimeString();
+
+		if($project->save()) {
+			Session::flash('success', trans('flash.project_bill_success'));
+		}
+		else {
+			Session::flash('fail', trans('flash.project_bill_fail'));
+		}
+
+		return Redirect::back();
 	}
 
 }
