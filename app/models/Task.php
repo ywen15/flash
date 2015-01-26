@@ -10,6 +10,11 @@ class Task extends Ardent {
 	/** Enable softDeleting **/
 	use SoftDeletingTrait;
 
+	/** Convert columns to Carbon objects **/
+	public function getDates() {
+		return array('started_at', 'finished_at', 'created_at', 'updated_at', 'deleted_at');
+	}
+
 	/** Relations **/
 	public function project() {
 		return $this->belongsTo('Project');

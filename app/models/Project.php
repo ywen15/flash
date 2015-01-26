@@ -10,6 +10,11 @@ class Project extends Ardent {
 	/** Enable softDeleting **/
 	use SoftDeletingTrait;
 
+	/** Convert columns to Carbon objects **/
+	public function getDates() {
+		return array('due_at', 'completed_at', 'created_at', 'updated_at', 'deleted_at');
+	}
+
 	/** Boot **/
 	public static function boot() {
 		parent::boot();

@@ -42,4 +42,6 @@ Route::get('project/modal/{project_id}/{type}', 'ProjectController@modal');
 Route::resource('project', 'ProjectController');
 
 /** Task **/
+Route::post('process/{process_id}/taskByDate', 'TaskController@taskByDate');
+Route::get('scheduler/{process_name?}', 'TaskController@scheduler');
 Route::post('task/{task_id}/saveStatus', 'TaskController@saveStatus');

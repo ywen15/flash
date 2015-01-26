@@ -156,7 +156,7 @@ class ProjectController extends \BaseController {
 
 		foreach($projects as $p) {
 			$p->timeline = '<button type="button" class="btn btn-sm btn-primary project-tl" data-project="'.$p->id.'"><span class="glyphicon glyphicon-plus"></span></button>';
-			$daysDiff = Carbon::now()->diffInDays(Carbon::createFromFormat('Y-m-d H:i:s', $p->due_at), false);
+			$daysDiff = Carbon::now()->diffInDays($p->due_at, false);
 			if($daysDiff < 0) $p->days_left = HTML::span($daysDiff, array('class' => 'days-left-past'));
 			else if($daysDiff > 0) $p->days_left = HTML::span($daysDiff, array('class' => 'days-left-future'));
 			else $p->days_left = HTML::span($daysDiff, array('class' => 'days-left-current'));
@@ -173,9 +173,9 @@ class ProjectController extends \BaseController {
 			$p->total = $p->order_amount + $p->shipping + $p->hst;
 
 			$p->input_date = $p->created_at->format($this->USER_INFO->project_date_format);
-			$p->due_date = HTML::span(Carbon::createFromFormat('Y-m-d H:i:s', $p->due_at)->format($this->USER_INFO->project_date_format), array('data-project' => $p->id));
+			$p->due_date = HTML::span($p->due_at->format($this->USER_INFO->project_date_format), array('data-project' => $p->id));
 
-			$p->days_to_complete = Carbon::createFromFormat('Y-m-d H:i:s', $p->due_at)->diffInDays(Carbon::createFromFormat('Y-m-d H:i:s', $p->created_at));
+			$p->days_to_complete = $p->due_at->diffInDays(Carbon::createFromFormat('Y-m-d H:i:s', $p->created_at));
 			$p->schedule = HTML::btnSchedule($p->id, $p->schedule);
 			$p->task = count($p->tasks()->get());
 
@@ -230,7 +230,7 @@ class ProjectController extends \BaseController {
 
 		$project->tasks()->update(array('status' => 'complete'));
 		$project->schedule = false;
-		$project->completed_at = \Carbon\Carbon::now()->toDateTimeString();
+		$project->completed_at = \Carbon\Carbon::now();
 
 		if($project->save()) {
 			Session::flash('success', trans('flash.project_complete_success'));

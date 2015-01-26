@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'us-cdbr-iron-east-01.cleardb.net',
-			'database'  => 'heroku_66c2a7ec14619a9',
-			'username'  => 'bbba6e436dae40',
-			'password'  => '347f8ab3',
+			'host'      => 'mysql.2ics.courseplex.com',
+			'database'  => 'flashproductions',
+			'username'  => 'ybsqladmin',
+			'password'  => '1!ybAdmSQL2015',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

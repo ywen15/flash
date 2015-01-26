@@ -96,4 +96,18 @@ class TaskController extends \BaseController {
 		}
 	}
 
+	public function scheduler($process=null)
+	{
+		$process = ($process) ? Process::where('name', '=', $process)->first() : Process::orderBy('order')->first();
+		$processes = Process::whereNull('deleted_at')->orderBy('order')->get();
+		return View::make('tasks.scheduler')->with(array('processes' => $processes))->with('process', $process);
+	}
+
+	public function taskByDate($id)
+	{
+		//Mon Jan 26 2015 00:00:00 GMT-0500 (EST)
+		$tasks = Process::findOrFail($id)->tasks()->where('started_at', '>=', $_POST['start'])->where('finished_at', '<=', $_POST['end'])->get();
+		dd(Carbon\Carbon::createFromFormat('D M d Y H:i:s', $_POST['start']));
+	}
+
 }

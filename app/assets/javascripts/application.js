@@ -15,4 +15,5 @@
 //= require bootstrap
 //= require chosen.jquery
 //= require_tree dataTables
+//= require jquery.calendar
 //= require main

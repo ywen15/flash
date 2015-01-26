@@ -35,7 +35,7 @@
 		</div>
 		<div class="form-group">
 			{{ Form::label('due_at', trans('flash.due_at')) }}
-			{{ Form::text('due_at', isset($project) ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $project->due_at)->format('d F Y') : Carbon\Carbon::now()->addWeekdays(5)->format('d F Y'), array('class' => 'form-control date-picker', 'id' => 'due_at')) }}
+			{{ Form::text('due_at', isset($project) ? $project->due_at->format('d F Y') : Carbon\Carbon::now()->addWeekdays(5)->format('d F Y'), array('class' => 'form-control date-picker', 'id' => 'due_at')) }}
 		</div>
 		<div class="form-group">
 			{{ Form::hidden('schedule', true) }}

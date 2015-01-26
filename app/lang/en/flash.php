@@ -18,7 +18,10 @@ return array(
 	'edit_project' => 'Edit Project',
 	'delete_task' => 'Delete Task',
 	'project' => 'Project',
+	'scheduler' => 'Scheduler',
 	'task' => 'Task',
+	'upcoming_tasks' => 'Upcoming Tasks',
+	'to_do_list' => 'TO DO LIST',
 
 	/** Nav menu **/
 	'nav_creator' => 'Creator',
@@ -44,6 +47,7 @@ return array(
 	'save_project' => 'Save Project',
 	'delete_project' => 'Delete Project',
 	'complete_project' => 'Complete Project',
+	'today' => 'Today (Now)',
 
 	/** Confirmation **/
 	'confirm_delete' => 'Are you sure you want to remove this project permanently?',

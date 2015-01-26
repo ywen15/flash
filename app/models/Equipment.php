@@ -18,4 +18,13 @@ class Equipment extends Ardent {
 	public function tasks() {
 		return $this->hasMany('Task');
 	}
+	public function unscheduled() {
+		$tasks = array();
+		foreach($this->tasks()->whereNull('started_at')->whereNull('finished_at')->get() as $t) {
+			if($t->project()->first()->schedule) {
+				array_push($tasks, $t);
+			}
+		}
+		return $tasks;
+	}
 }
