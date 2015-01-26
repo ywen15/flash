@@ -31,7 +31,18 @@ class ProjectController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		$users = User::whereNull('deleted_at')->orderBy('first_name')->get(['first_name', 'last_name', 'id'])->lists('full_name', 'id');
+		$customers = Customer::whereNull('deleted_at')->orderBy('name')->lists('name', 'id');
+
+		$processes = Process::whereNull('deleted_at')->orderBy('order')->get();
+		$equipments = array();
+		foreach($processes as $process) {
+			$equipments = array_add($equipments, $process->name, $process->equipments()->orderBy('name')->lists('name', 'id'));
+		}
+
+		$taskStatus = Task::getTaskStatus();
+
+		return View::make('projects.new')->with(array('users' => $users, 'customers' => $customers, 'equipments' => $equipments, 'taskStatus' => $taskStatus));
 	}
 
 	/**
@@ -42,7 +53,20 @@ class ProjectController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$data = Input::all();
+		$data['due_at'] = Carbon::createFromFormat('d F Y', $data['due_at'])->format('Y-m-d H:i:s');
+		$project = new Project($data);
+
+		if($project->save()) {
+			$task = new Task($data);
+			if($project->tasks()->save($task)) {
+				Session::flash('success', trans('flash.project_create_success'));
+				return Redirect::route('project.index');
+			}
+		}
+
+		Session::flash('fail', trans('flash.project_create_fail'));
+		return Redirect::route('project.index');
 	}
 
 	/**
@@ -66,7 +90,18 @@ class ProjectController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$users = User::whereNull('deleted_at')->orderBy('first_name')->get(['first_name', 'last_name', 'id'])->lists('full_name', 'id');
+		$customers = Customer::whereNull('deleted_at')->orderBy('name')->lists('name', 'id');
+
+		$processes = Process::whereNull('deleted_at')->orderBy('order')->get();
+		$equipments = array();
+		foreach($processes as $process) {
+			$equipments = array_add($equipments, $process->name, $process->equipments()->orderBy('name')->lists('name', 'id'));
+		}
+
+		$taskStatus = Task::getTaskStatus();
+
+		return View::make('projects.edit')->with(array('project' => Project::findOrFail($id), 'users' => $users, 'customers' => $customers, 'equipments' => $equipments, 'taskStatus' => $taskStatus));
 	}
 
 	/**
@@ -137,9 +172,14 @@ class ProjectController extends \BaseController {
 
 			$p->total = $p->order_amount + $p->shipping + $p->hst;
 
+			$p->input_date = $p->created_at->format($this->USER_INFO->project_date_format);
+			$p->due_date = HTML::span(Carbon::createFromFormat('Y-m-d H:i:s', $p->due_at)->format($this->USER_INFO->project_date_format), array('data-project' => $p->id));
+
 			$p->days_to_complete = Carbon::createFromFormat('Y-m-d H:i:s', $p->due_at)->diffInDays(Carbon::createFromFormat('Y-m-d H:i:s', $p->created_at));
-			$p->schedule = ($p->schedule) ? HTML::image('images/on_schedule.png') : HTML::image('images/off_schedule.png');
+			$p->schedule = HTML::btnSchedule($p->id, $p->schedule);
 			$p->task = count($p->tasks()->get());
+
+			$p->notes = HTML::span($p->notes, array('data-project' => $p->id));
 
 			if(!$project_type) {
 				$completeBtn = HTML::btnComplete('project', $p->id);
@@ -216,6 +256,54 @@ class ProjectController extends \BaseController {
 		}
 
 		return Redirect::back();
+	}
+
+	public function saveNotes($id)
+	{
+		$project = Project::findOrFail($id);
+		$project->notes = $_POST['notes'];
+
+		if($project->save()) {
+			Session::flash('success', trans('flash.project_notes_success'));
+		}
+		else {
+			Session::flash('fail', trans('flash.project_notes_fail'));
+		}
+	}
+
+	public function saveDueDate($id)
+	{
+		$project = Project::findOrFail($id);
+		$project->due_at = Carbon::createFromFormat('D/M/d/Y', $_POST['dueDate'])->format('Y-m-d H:i:s');
+
+		if($project->save()) {
+			Session::flash('success', trans('flash.project_duedate_success'));
+		}
+		else {
+			Session::flash('fail', trans('flash.project_duedate_fail'));
+		}
+	}
+
+	public function schedule($id)
+	{
+		$project = Project::findOrFail($id);
+		$project->schedule = ($project->schedule) ? false : true;
+
+		if($project->save()) {
+			Session::flash('success', trans('flash.project_schedule_success'));
+		}
+		else {
+			Session::flash('fail', trans('flash.project_schedule_fail'));
+		}
+
+		return Redirect::back();
+	}
+
+	public function timeline($id)
+	{
+		$project = Project::findOrFail($id);
+		$taskStatus = Task::getTaskStatus();
+		return View::make('projects.timeline')->with('project', $project)->with('duration', $project->duration())->with('taskStatus', $taskStatus);
 	}
 
 }

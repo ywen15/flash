@@ -109,3 +109,9 @@ HTML::macro('btnBill', function($component, $id)
 {
 	return html_entity_decode( link_to($component.'/'.$id.'/bill', HTML::span(null, array('class' => 'glyphicon glyphicon-usd')), array('class' => 'btn btn-sm btn-warning projectModal', 'data-toggle' => 'modal', 'data-target' => '#projectModal', 'data-project' => $id, 'data-action' => 'bill')) );
 });
+
+HTML::macro('btnSchedule', function($id, $state)
+{
+	$icon = ($state) ? HTML::image('images/on_schedule.png') : HTML::image('images/off_schedule.png');
+	return html_entity_decode( link_to('project/'.$id.'/schedule', $icon, array('class' => 'btn btn-default btn-sm projectModal', 'data-toggle' => 'modal', 'data-target' => '#projectModal', 'data-project' => $id, 'data-action' => 'schedule')) );
+});

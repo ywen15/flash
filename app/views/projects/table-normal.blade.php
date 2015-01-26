@@ -37,16 +37,18 @@
                 {'data': 'stock'},
                 {'data': 'rep'},
                 {'data': 'pm'},
-                {'data': 'created_at'},
-                {'data': 'due_at'},
+                {'data': 'input_date'},
+                {'data': 'due_date', 'class': 'dueDate'},
                 {'data': 'days_to_complete'},
                 {'data': 'schedule'},
                 {'data': 'task', 'visible': false},
-                {'data': 'notes', 'visible': false},
+                {'data': 'notes', 'visible': true, 'class': 'notes'},
                 {'data': 'modify'}
             ],
-            initComplete: function(settings, json) {
+            fnDrawCallback: function() {
                 rebinder();
+                notes_editor();
+                due_date_editor();
             },
             tableTools: {
                 'aButtons': [
@@ -60,3 +62,4 @@
         })
     })(jQuery);
 </script>
+@stop

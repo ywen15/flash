@@ -28,8 +28,18 @@ Route::resource('user', 'UserController');
 Route::get('project/dataTable/{project_type?}', 'ProjectController@dataTable');
 Route::get('billing', 'ProjectController@billing');
 Route::get('archive', 'ProjectController@archive');
+
+Route::get('project/{project_id}/timeline', 'ProjectController@timeline');
 Route::get('project/{project_id}/reset', 'ProjectController@reset');
 Route::get('project/{project_id}/complete', 'ProjectController@complete');
 Route::get('project/{project_id}/bill', 'ProjectController@bill');
+Route::get('project/{project_id}/schedule', 'ProjectController@schedule');
+
+Route::post('project/{project_id}/saveDueDate', 'ProjectController@saveDueDate');
+Route::post('project/{project_id}/saveNotes', 'ProjectController@saveNotes');
+
 Route::get('project/modal/{project_id}/{type}', 'ProjectController@modal');
 Route::resource('project', 'ProjectController');
+
+/** Task **/
+Route::post('task/{task_id}/saveStatus', 'TaskController@saveStatus');

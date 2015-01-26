@@ -4,7 +4,7 @@ use LaravelBook\Ardent\Ardent;
 
 class Project extends Ardent {
 	/** Properties **/
-	protected $fillable = array('description', 'docket', 'quantity', 'stock', 'notes', 'schedule', 'reference', 'order_amount', 'shipping', 'hst', 'due_at', 'completed_at', 'billed_at');
+	protected $fillable = array('description', 'docket', 'customer_id', 'quantity', 'stock', 'notes', 'rep_id', 'pm_id', 'schedule', 'reference', 'order_amount', 'shipping', 'hst', 'due_at', 'completed_at', 'billed_at');
 	public static $rules = array();
 
 	/** Enable softDeleting **/
@@ -13,6 +13,10 @@ class Project extends Ardent {
 	/** Boot **/
 	public static function boot() {
 		parent::boot();
+
+		static::creating(function($project) {
+			Cache::flush();
+		});
 
 		static::updating(function($project) {
 			Cache::flush();
@@ -35,6 +39,13 @@ class Project extends Ardent {
 	}
 	public function customer() {
 		return $this->belongsTo('Customer');
+	}
+	public function duration() {
+		$duration = 0;
+		foreach($this->tasks()->get() as $t) {
+			$duration += intval($t->actual_time);
+		}
+		return $duration;
 	}
 
 	/** Get project collection count **/

@@ -4,6 +4,7 @@ use LaravelBook\Ardent\Ardent;
 
 class Equipment extends Ardent {
 	/** Properties **/
+	protected $table = 'equipments';
 	protected $fillable = array();
 	public static $rules = array();
 

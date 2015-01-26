@@ -17,7 +17,8 @@ App::before(function($request)
 		$USER_INFO = new stdClass;
 		$USER_INFO->logged_in = false;
 		$USER_INFO->user = null;
-		$USER_INFO->date_format = 'F j, Y';
+		$USER_INFO->global_date_format = 'l, F j, Y';
+		$USER_INFO->project_date_format = 'D/M/d/Y';
 
 		if(Sentry::check()) {
 			$USER_INFO->logged_in = true;

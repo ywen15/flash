@@ -50,3 +50,46 @@
     padding: 3px;
   }
 }
+
+/*** Progress-bar borders ***/
+.progress {
+  height: auto;
+  select {
+    color: black;
+  }
+}
+.progress-bar {
+  padding-bottom: 5px;
+}
+.progress-bar-blank {
+  background-color: #dddddd;
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+  border-top: 1px solid #cccccc;
+  color: black;
+}
+.progress-bar-primary {
+  border-left: 1px solid #2d6a9f;
+  border-right: 1px solid #2d6a9f;
+  border-top: 1px solid #2d6a9f;
+}
+.progress-bar-success {
+  border-left: 1px solid #357935;
+  border-right: 1px solid #357935;
+  border-top: 1px solid #357935;
+}
+.progress-bar-warning {
+  border-left: 1px solid #d38312;
+  border-right: 1px solid #d38312;
+  border-top: 1px solid #d38312;
+}
+
+/** Project Create **/
+#project-create {
+  h1 {
+    text-align: center;
+  }
+  h2 {
+    margin-top: 0;
+  }
+}

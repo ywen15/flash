@@ -83,4 +83,17 @@ class TaskController extends \BaseController {
 		//
 	}
 
+	public function saveStatus($id)
+	{
+		$task = Task::findOrFail($id);
+		$task->status = $_POST['status'];
+
+		if($task->save()) {
+			Session::flash('success', trans('flash.task_status_success'));
+		}
+		else {
+			Session::flash('fail', trans('flash.task_status_fail'));
+		}
+	}
+
 }

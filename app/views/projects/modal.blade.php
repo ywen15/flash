@@ -52,6 +52,10 @@
 							{{ Form::text('total', null, array('class' => 'form-control', 'id' => 'total', 'disabled' => 'disabled')) }}
 						</div>
 					</div>
+			@elseif($type == 'schedule')
+					{{ $project->schedule ? trans('flash.confirm_unschedule') : trans('flash.confirm_schedule') }}
+				</div>
+				{{ Form::open(array('action' => array('ProjectController@schedule', $project->id), 'method' => 'get', 'role' => 'form')) }}
 			@endif
 
 			<div class="modal-footer">

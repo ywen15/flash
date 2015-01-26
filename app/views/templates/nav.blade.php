@@ -17,7 +17,7 @@
 					{{ html_entity_decode(link_to('archive', trans('flash.nav_archive').'<span style="margin-left:5px;"  class="badge pull-right">'.count(Project::getProjectType('archive')).'</span>')) }}
 				</li>
 
-				<li class="nav-date"><h4>{{ date('l, F j, Y', time()) }}</h4></li>
+				<li class="nav-date"><h4>{{ date($USER_INFO->global_date_format, time()) }}</h4></li>
 
 				<li class="pull-right">{{ link_to_action('SessionController@destroy', 'Logout') }}</li>
 			</ul>
