@@ -34,10 +34,10 @@
                         url: '/process/' + {{ $process->id }} + '/taskByDate',
                         type: 'POST',
                         dataType: 'json',
-                        data: { start: start, end: end },
+                        data: { start: start.format('yyyy-mm-dd HH:MM:ss'), end: end.format('yyyy-mm-dd HH:MM:ss') },
                         success: function(events) {
                             callback(events);
-                        }
+                        },
                     });
                 },
                 //users: users,

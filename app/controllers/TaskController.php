@@ -105,9 +105,10 @@ class TaskController extends \BaseController {
 
 	public function taskByDate($id)
 	{
-		//Mon Jan 26 2015 00:00:00 GMT-0500 (EST)
-		$tasks = Process::findOrFail($id)->tasks()->where('started_at', '>=', $_POST['start'])->where('finished_at', '<=', $_POST['end'])->get();
-		dd(Carbon\Carbon::createFromFormat('D M d Y H:i:s', $_POST['start']));
+		$start = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $_POST['start']);
+		$end = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $_POST['end']);
+		$tasks = Process::findOrFail($id)->tasks()->where('started_at', '>=', $start)->where('finished_at', '<=', $end)->get();
+		return $tasks;
 	}
 
 }
