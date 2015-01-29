@@ -7,6 +7,8 @@ class Task extends Ardent {
 	protected $fillable = array('equipment_id', 'recorded_time', 'actual_time', 'status', 'notes', 'started_at', 'finished_at');
 	public static $rules = array();
 
+	public static $scheduler = array('options' => array('timeslotsPerHour' => 1, 'timeslotHeight' => 60, 'defaultFreeBusy' => array('free' => true)), 'events' => array());
+
 	/** Enable softDeleting **/
 	use SoftDeletingTrait;
 
@@ -26,4 +28,5 @@ class Task extends Ardent {
 	public static function getTaskStatus() {
 		return array('pending' => trans('flash.pending'), 'approved' => trans('flash.approved'), 'in-progress' => trans('flash.in-progress'), 'complete' => trans('flash.complete'));
 	}
+
 }

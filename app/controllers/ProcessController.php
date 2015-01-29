@@ -83,4 +83,9 @@ class ProcessController extends \BaseController {
 		//
 	}
 
+	public function getEquipmentList($id)
+	{
+		return Process::findOrFail($id)->equipments()->lists('name');
+	}
+
 }

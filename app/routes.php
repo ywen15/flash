@@ -24,6 +24,9 @@ Route::resource('session', 'SessionController', array('only' => array('store')))
 /** User **/
 Route::resource('user', 'UserController');
 
+/** Process **/
+Route::get('process/{process_id}/getEquipmentList', 'ProcessController@getEquipmentList');
+
 /** Project **/
 Route::get('project/dataTable/{project_type?}', 'ProjectController@dataTable');
 Route::get('billing', 'ProjectController@billing');

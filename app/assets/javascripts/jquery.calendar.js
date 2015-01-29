@@ -2324,7 +2324,7 @@
             }
 
             // this is a human readable date
-            return Date.parse(d) || new Date(d);
+            return new Date(d);
           }
 
           if (typeof d == 'number') {

@@ -108,7 +108,27 @@ class TaskController extends \BaseController {
 		$start = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $_POST['start']);
 		$end = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $_POST['end']);
 		$tasks = Process::findOrFail($id)->tasks()->where('started_at', '>=', $start)->where('finished_at', '<=', $end)->get();
-		return $tasks;
+
+		$results = Task::$scheduler;
+		foreach($tasks as $t) {
+			$project = $t->project()->first();
+			$event = array(
+				'id' => $t->id,
+				'admin' => 'true',
+				'project_id' => $t->project_id,
+				'start' => $t->started_at->timestamp . '000',
+				'end' => $t->finished_at->timestamp . '000',
+				'title' => $project->description,
+				'description' => $project->docket . '<br />' . $project->customer()->first()->name . '<br />' . trans('flash.'.$t->status),
+				'locked' => true,
+				'hasnote' => false,
+				'userId' => intval($t->equipment()->first()->order),
+				'colour' => $project->rep()->first()->colour
+			);
+			array_push($results['events'], $event);
+		}
+		//$events
+		return $results;
 	}
 
 }
