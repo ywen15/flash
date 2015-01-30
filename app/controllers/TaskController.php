@@ -44,7 +44,8 @@ class TaskController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$taskStatus = Task::getTaskStatus();
+		return View::make('tasks.show')->with('task', Task::findOrFail($id))->with('taskStatus', $taskStatus);
 	}
 
 	/**
@@ -127,8 +128,15 @@ class TaskController extends \BaseController {
 			);
 			array_push($results['events'], $event);
 		}
-		//$events
 		return $results;
+	}
+
+	public function reschedule($id)
+	{
+		$task = Task::findOrFail($id);
+		$task->started_at = null;
+		$task->finished_at = null;
+		$task->save();
 	}
 
 }

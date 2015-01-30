@@ -47,4 +47,6 @@ Route::resource('project', 'ProjectController');
 /** Task **/
 Route::post('process/{process_id}/taskByDate', 'TaskController@taskByDate');
 Route::get('scheduler/{process_name?}', 'TaskController@scheduler');
+Route::get('task/{task_id}/reschedule', 'TaskController@reschedule');
 Route::post('task/{task_id}/saveStatus', 'TaskController@saveStatus');
+Route::resource('task', 'TaskController');

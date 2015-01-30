@@ -8,7 +8,7 @@
 					{{ html_entity_decode(link_to_route('project.index', trans('flash.nav_list').'<span style="margin-left:5px;"  class="badge pull-right">'.count(Project::getProjectType()).'</span>')) }}
 				</li>
 				<li class="pull-left">
-					{{ link_to('scheduler', trans('flash.scheduler')) }}
+					{{ html_entity_decode(link_to('scheduler', trans('flash.scheduler').'<span style="margin-left:5px" class="badge pull-right master-tasks">'.count(Task::getScheduledTask()).'</span>')) }}
 				</li>
 				<li class="pull-left">
 					{{ html_entity_decode(link_to('billing', trans('flash.nav_billing').'<span style="margin-left:5px;"  class="badge pull-right">'.count(Project::getProjectType('billing')).'</span>')) }}
