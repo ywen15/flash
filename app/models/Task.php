@@ -29,4 +29,14 @@ class Task extends Ardent {
 		return array('pending' => trans('flash.pending'), 'approved' => trans('flash.approved'), 'in-progress' => trans('flash.in-progress'), 'complete' => trans('flash.complete'));
 	}
 
+	public static function getScheduledTask() {
+		$tasks = array();
+		foreach(Task::whereNull('started_at')->whereNull('finished_at')->get() as $t) {
+			if($t->project()->first()->schedule) {
+				array_push($tasks, $t);
+			}
+		}
+		return $tasks;
+	}
+
 }

@@ -249,3 +249,48 @@ function due_date_editor() {
 		if($(this).find('span').children().length == 0) showDueDate($(this).find('span'));
 	});
 }
+
+var calendar;
+
+function eventIconHandler() {
+    $(".reschedule-btn").click(function() {
+        $.ajax({
+            url: '/task/' + $(this).data('id') + '/reschedule',
+            success: function(data) {
+                calendar.weekCalendar('refresh');
+                console.log(parseFloat($(".master-tasks").text()) + 1);
+                $(".master-tasks").text(parseFloat($(".master-tasks").text()) + 1);
+                if ($(".master-tasks").text() > 0) {
+                    $(".master-tasks").show();
+                }
+            }
+        });
+    });
+
+    $(".edit-btn").click(function() {
+        window.location.href = '/project/edit/'+$(this).data('project_id');
+    });
+    $(".view-btn").click(function() {
+        load_task($(this).parent().data('calEvent').id, $(this).parent().data('calEvent').title);
+    });
+}
+
+function load_task(id, title) {
+    $.ajax({
+        url: '/task/' + id,
+        success: function(data) {
+            $('#dialog').html(data);
+            $('#dialog').dialog({
+                modal: true,
+                minWidth: 500,
+                draggable: false,
+                title: title,
+                buttons: {
+                    Close: function() {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+    });
+}
