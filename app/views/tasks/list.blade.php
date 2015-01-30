@@ -28,7 +28,13 @@
 										</a>
 										<ul class="list-group collapse in" id="collapse{{ $p->id . $e->id }}">
 											@foreach($tasks as $t)
-												<li class="list-group-item" data-task="{{ $t->id }}">
+												<li class="list-group-item task" data-task="{{ $t->id }}" 
+																				 data-userid="{{ $t->equipment->order }}" 
+																				 data-duration="{{ $t->actual_time }}" 
+																				 data-colour="{{ $t->project->rep['colour'] }}" 
+																				 data-admin="true" 
+																				 data-title="{{ $t->project->description }}" 
+																				 data-id="{{ $t->id }}">
 													{{ HTML::image('images/task.png') }}
 													{{ $t->project->description }} - {{ $t->project->docket }} - {{ $t->project->customer->name }}
 												</li>

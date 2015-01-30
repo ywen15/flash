@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 class ProcessController extends \BaseController {
 
 	/**
@@ -86,6 +88,28 @@ class ProcessController extends \BaseController {
 	public function getEquipmentList($id)
 	{
 		return Process::findOrFail($id)->equipments()->lists('name');
+	}
+
+	public function weekelyTask($id)
+	{
+		$result = array(1 => array(), 2 => array(), 3 => array(), 4 => array(), 5 => array(), 6 => array(), 7 => array());
+		
+		$start_date = Carbon::createFromTimestamp(intval($_GET['start']) / 1000);
+		$end_date = Carbon::createFromTimestamp(intval($_GET['end']) / 1000);
+
+		$tasks = Process::findOrFail($id)->tasks()->where('equipment_id', '=', $_GET['equipment'])
+												  ->where('started_at', '>=', $start_date)
+												  ->where('finished_at', '<=', $end_date)
+												  ->orderBy('started_at', 'asc')->get();
+
+		foreach ($tasks as $t) {
+			array_push($result[intval($t->started_at->format('N'))], $t);
+		}
+		$data = array('tasks' => $result,
+					  'start' => $start_date,
+					  'end'   => $end_date);
+
+		return View::make('tasks.weekly_view')->with($data);
 	}
 
 }

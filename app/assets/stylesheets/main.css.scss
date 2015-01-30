@@ -95,6 +95,9 @@
 }
 
 /** Scheduler **/
+.task {
+  color: #428bca;
+}
 .upcoming {
   h5 {
     font-weight: bold;
@@ -130,5 +133,21 @@
 .indv-task tbody{
   .tr .td{
     padding-right:5px;
+  }
+}
+
+#weekly-table {
+  thead {
+    text-align: center;
+  }
+  .panel {
+    font-size: 10px;
+    color: white;
+    padding-left: 5px;
+    cursor: pointer;
+  }
+  .task-details {
+    display: none;
+    text-align: center;
   }
 }

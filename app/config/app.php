@@ -125,6 +125,8 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
+		'Authority\Repo\RepoServiceProvider',
+		'Authority\Service\Form\FormServiceProvider',
 
 	),
 

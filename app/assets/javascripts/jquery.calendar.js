@@ -331,9 +331,8 @@
         calEvent.start = calEvent.start.getTime();
         calEvent.end = calEvent.end.getTime();
         $.ajax({
-          url: root+'/api/tasks/save/event',
-          type: 'POST',
-          dataType: 'json',
+          url: '/task/' + calEvent.id,
+          type: 'PUT',
           data: calEvent
         });
       },

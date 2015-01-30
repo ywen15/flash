@@ -1,86 +1,72 @@
 <?php
 
-class SessionController extends \BaseController {
+use Authority\Repo\Session\SessionInterface;
+use Authority\Service\Form\Login\LoginForm;
+
+class SessionController extends BaseController {
 
 	/**
-	 * Display a listing of the resource.
-	 * GET /session
-	 *
-	 * @return Response
+	 * Member Vars
 	 */
-	public function index()
+	protected $session;
+	protected $loginForm;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct(SessionInterface $session, LoginForm $loginForm)
 	{
-		//
+		$this->session = $session;
+		$this->loginForm = $loginForm;
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 * GET /session/create
-	 *
-	 * @return Response
+	 * Show the login form
 	 */
 	public function create()
 	{
-		//
+		return View::make('sessions.login');
 	}
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /session
 	 *
 	 * @return Response
 	 */
 	public function store()
 	{
-		//
-	}
+		// Form Processing
+        $result = $this->loginForm->save( Input::all() );
 
-	/**
-	 * Display the specified resource.
-	 * GET /session/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+        if( $result['success'] )
+        {
+            Event::fire('user.login', array(
+            							'userId' => $result['sessionData']['userId'],
+            							'email' => $result['sessionData']['email']
+            							));
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /session/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+            // Success!
+            return Redirect::to('/');
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /session/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
+        } else {
+            Session::flash('error', $result['message']);
+            return Redirect::to('login')
+                ->withInput()
+                ->withErrors( $this->loginForm->errors() );
+        }
 	}
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /session/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		//
+		$this->session->destroy();
+		Event::fire('user.logout');
+		return Redirect::to('/');
 	}
 
 }

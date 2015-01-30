@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 class TaskController extends \BaseController {
 
 	/**
@@ -69,7 +71,12 @@ class TaskController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$data = Input::all();
+
+		$task = Task::findOrFail($id);
+		$task->started_at = Carbon::createFromTimestamp(intval($data['start']) / 1000);
+		$task->finished_at = Carbon::createFromTimestamp(intval($data['end']) / 1000);
+		$task->save();
 	}
 
 	/**
@@ -106,8 +113,8 @@ class TaskController extends \BaseController {
 
 	public function taskByDate($id)
 	{
-		$start = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $_POST['start']);
-		$end = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $_POST['end']);
+		$start = Carbon::createFromFormat('Y-m-d H:i:s', $_POST['start']);
+		$end = Carbon::createFromFormat('Y-m-d H:i:s', $_POST['end']);
 		$tasks = Process::findOrFail($id)->tasks()->where('started_at', '>=', $start)->where('finished_at', '<=', $end)->get();
 
 		$results = Task::$scheduler;

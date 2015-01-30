@@ -258,7 +258,6 @@ function eventIconHandler() {
             url: '/task/' + $(this).data('id') + '/reschedule',
             success: function(data) {
                 calendar.weekCalendar('refresh');
-                console.log(parseFloat($(".master-tasks").text()) + 1);
                 $(".master-tasks").text(parseFloat($(".master-tasks").text()) + 1);
                 if ($(".master-tasks").text() > 0) {
                     $(".master-tasks").show();

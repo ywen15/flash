@@ -20,6 +20,15 @@
 				<li class="nav-date"><h4>{{ date($USER_INFO->global_date_format, time()) }}</h4></li>
 
 				<li class="pull-right">{{ link_to_action('SessionController@destroy', 'Logout') }}</li>
+				<li class="pull-right">{{ link_to_action('UserController@index', 'Users ') }}</li>
+				<li class="pull-right dropdown">
+					<a class="dropdown-toggle" href="/" data-toggle="dropdown">Admin<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="{{ action('AdminController@processes') }}">Modify Processes</a></li>
+						<li><a href="{{ action('UploadController@users') }}">Upload Users</a></li>
+						<li><a href="{{ action('UploadController@customers') }}">Customers</a></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>
